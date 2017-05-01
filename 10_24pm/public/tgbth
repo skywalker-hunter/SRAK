@@ -1,0 +1,311 @@
+var express = require('express');
+var mongoose = require('mongoose');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var path    = require('path');
+var sessions = require('client-sessions');
+
+var app = express();
+
+//app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+
+app.use(express.static(__dirname + '/public'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+
+
+app.use(sessions({
+  cookieName: 'session',
+  secret: 'rgebjiuVihB5U7oij2ihBIUB334I765UHIojkbB',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
+
+
+mongoose.connect('mongodb://localhost/test',function (err) {
+  if(err){
+    return console.log(err);
+  }else {
+    return console.log('successfully connected to mongodb');
+  }
+});
+
+
+var mySchema = mongoose.Schema({
+  username: {type: String, unique: true},
+  password: {type: String},
+  firstname: String,
+  lastname: String
+});
+
+
+var User = mongoose.model('users',mySchema);
+
+
+app.get('/', function (req, res) {
+      res.send('phani')
+   // res.redirect('/login');
+});
+
+
+/*
+app.get('/lol', function (req, res) {
+    res.sendFile(path.join(__dirname+'/public/index.html'));
+});
+*/
+
+
+app.post('/signingup',function (req,res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  var user = new User();
+
+  user.username = username;
+  user.password = password;
+  user.firstname = firstname;
+  user.lastname = lastname;
+
+  user.save(function (err,savedObject) {
+    if(err){
+      console.log(err);
+      res.send('please choose different username as " '+username+ ' " is already taken : ');
+      //res.status(500).send();
+    }else{
+      res.redirect('/dashboard');
+      //res.send(savedObject);
+    }
+  });
+});
+
+
+
+app.post('/loggingin',function (req,res) {
+  var username = req.body.username;
+ // var password = req.body.password;
+  // res.send(username1+" "+password1);
+
+  User.findOne({username: req.body.username},function (err,user) {
+    if(!user){
+      res.send('invalid username');
+    }else{
+      if(req.body.password === user.password){
+        req.session.user = user;
+      //  res.send(req.session.user.username);
+        res.redirect('/dashboard');
+      }else{
+        res.send('invalid  password');
+      }
+    }
+
+  });
+});
+
+
+/*
+app.post('/loggingin',function (req,res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  // res.send(username1+" "+password1);
+
+
+  User.findOne({username: username,password: password},function (err,user) {
+    if(err){
+      console.log(err);
+      return res.status(500).send();
+    }
+
+    if(!user){
+      res.send('not a registered user');
+    }else {
+     // req.session.user = username;
+      res.redirect('/dashboard');
+    }
+  });
+});
+*/
+
+
+app.get('/dashboard',function (req,res) {
+
+  if(req.session && req.session.user){
+    User.findOne({username: req.session.user.username},function(err,user){
+      if(!user){
+        req.session.reset();
+        res.redirect('/login');
+      }else{
+        res.locals.user = user;
+        res.sendFile(path.join(__dirname+'/public/dashboard.html'));
+      }
+    });
+  }else{
+    res.redirect('/login');
+  }
+});
+
+
+app.post('/delete_user',function (req,res) {
+  var username = req.body.username;
+  User.findOneAndRemove({username: username},function (err,foundObject) {
+    if(err){
+      console.log(err);
+      res.status(500).send();
+    }if(!foundObject){
+      res.send('not able to remove !! may be no user');
+    }else {
+      res.send('successfully removed');
+    }
+  });
+});
+
+
+
+app.post('/setting_new_password',function (req,res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var confirm_password = req.body.confirm_password;
+
+  if(password != confirm_password){
+    res.send('your passwords didnot match or you have entered incorrect username');
+  }else {
+
+
+    User.findOne({username: username},function (err,foundObject) {
+      if(err){
+        console.log(err);
+        res.status(500).send();
+      }else {
+
+        if(!foundObject){
+          res.send('you have entered incorrect username');
+          //for this a same new forgot_password.html page can be developed so that it contains itself and
+        }else {
+          if(req.body.password){
+            foundObject.password = password;
+          }
+
+          foundObject.save(function (err,updateObject) {
+            if(err){
+              console.log(err);
+              return res.status(500).send();
+            }else {
+              res.send("yahoo password changed!! Now you can login with your new password");
+            }
+          });
+        }
+
+      }
+    });
+  }
+});
+
+
+app.get('/login',function (req,res,next) {
+  if(req.session && req.session.user){
+    User.findOne({username: req.session.user.username},function(err,user){
+      if(!user){
+        req.session.reset();
+        res.sendFile(path.join(__dirname+'/public/login.html'));
+      }else{
+        res.locals.user = user;
+        res.redirect('/dashboard');
+      }
+    });
+  }else{
+  //  res.send(req.session.user);
+    res.sendFile(path.join(__dirname+'/public/login.html'));
+  }
+});
+
+/*
+app.get('/login',function (req,res,next) {
+
+  res.sendFile('/Users/killer/Desktop/last_login_and_signup/public/login.html');
+});
+*/
+
+
+app.get('/deleting_user',function (req,res,next) {
+  if(req.session && req.session.user){
+    User.findOne({username: req.session.user.username},function(err,user){
+      if(!user){
+        req.session.reset();
+        res.sendFile(path.join(__dirname+'/public/forgot_password.html'));
+      }else{
+        res.locals.user = user;
+        res.redirect('/dashboard');
+      }
+    });
+  }else{
+    res.sendFile(path.join(__dirname+'/public/remove_account.html'));
+  }
+
+  //res.send(__dirname);
+  
+  //res.sendFile('/Users/killer/Desktop/last_login_and_signup/public/remove_account.html');
+});
+
+
+app.get('/forgot_password',function (req,res,next) {
+  if(req.session && req.session.user){
+    User.findOne({username: req.session.user.username},function(err,user){
+      if(!user){
+        req.session.reset();
+        res.sendFile(path.join(__dirname+'/public/forgot_password.html'));
+      }else{
+        res.locals.user = user;
+        res.redirect('/dashboard');
+      }
+    });
+  }else{
+    res.sendFile(path.join(__dirname+'/public/forgot_password.html'));
+  }
+
+  //res.send(__dirname);
+ // res.sendFile(path.join(__dirname+'/public/forgot_password.html'));
+  //res.sendFile('/Users/killer/Desktop/last_login_and_signup/public/forgot_password.html');
+});
+
+
+
+app.get('/signup',function (req,res,next) {
+  if(req.session && req.session.user){
+    User.findOne({username: req.session.user.username},function(err,user){
+      if(!user){
+        req.session.reset();
+        res.sendFile(path.join(__dirname+'/public/signup.html'));
+      }else{
+        res.locals.user = user;
+        res.redirect('/dashboard');
+      }
+    });
+  }else{
+    res.sendFile(path.join(__dirname+'/public/signup.html'));
+  }
+
+  //res.send(__dirname);
+  //res.sendFile('/Users/killer/Desktop/last_login_and_signup/public/signup.html');
+});
+
+
+app.get('/logout',function(req,res){
+  req.session.reset();
+  res.redirect('/login');
+});
+
+
+
+app.listen(3000, function (err) {
+  if(err){
+    console.log('port may be in use : bind exception')
+  }else{
+    console.log('Example app listening on port 3000!');
+  }
+});

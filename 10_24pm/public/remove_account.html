@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form name="forgot_password_form" action="/delete_user" method="post">
+    userid   <input type="text" placeholder="username" name="username" required>
+    <input type="submit"name="button1"value="delete" required>
+</form>
+
+<form action="/login" method="get">
+    <input type="submit" name="redirect_to_signup" value="Go to login">
+</form>
+</body>
+</html>

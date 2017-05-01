@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+.button {
+    background-color: #0066cc;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}	
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+body {
+    background-image:    url(iith.jpeg);
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;              /* optional, center the image */
+}
+
+</style>
+    <meta charset="UTF-8">
+     <title>SRAK</title>
+</head>
+<body>
+
+	<form align="right" action="/logout" method="get">
+	    <input class="button" type="submit"  value="Logout">
+	</form>
+   
+  <div align="center">
+    <img  src="srak_logo.png" alt="srak" style="width:200px;height:100px;"  align="middle">
+    </div>
+  <br><br>
+	  <form align="center" ref='uploadForm' 
+      id='uploadForm' 
+      action='/dashboard' 
+      method='post' 
+      encType="multipart/form-data">
+
+    		<input type="file" name="sampleFile"/>
+        <input class="button" type='submit' value='UPLOAD' />
+    </form> 
+	<h1 align="center">Choose a zip file containing the submission files</h1>	
+
+	<br><br>
+
+
+
+<form align="center" method="post" action='/download'>
+  <input class="button" type="submit" value='DOWNLOAD REPORT'>
+</form>
+	
+<br><br><br>
+
+<form align="center" method="post" action='/download_2'>
+  <input class="button" type="submit" value='DOWNLOAD SUMMARY'>
+</form>
+
+<div style="position: absolute; bottom: 20px; right: 50px;width: 400px; text-align:right;">
+        <h1 style="font-family: times, serif; font-size:30pt;"align="right" align="down">BY IITH, FOR IITH
+          <h1>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>SRAK</title>
+        <link rel="stylesheet" href="css/style.css">
+<style>
+  body {
+    background-image:    url(iith.jpeg);
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;              /* optional, center the image */
+}
+
+</style>
+  </head>
+
+  <body>
+    <br><br>
+    <br><br>
+    <div class="login-card">
+    <h1 style="font-family: times, serif; font-size:45pt; font-style:italic"><b>SRAK</b></h1>
+    <br>
+  <form name="login_form" action="/loggingin" method="post">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="submit" name="login" class="login login-submit" value="Login">
+  </form>
+    
+  <div class="login-help">
+    <a href="/signup">Register</a> • <a href="/forgot_password">Forgot Password</a>
+  </div>
+</div>
+
+  <div style="position: absolute; bottom: 20px; right: 50px;width: 400px; text-align:right;">
+        <h1 style="font-family: times, serif; font-size:30pt;" align="right" align="down">BY IITH, FOR IITH<h1>
+    </div>
+
+  </body>
+</html>

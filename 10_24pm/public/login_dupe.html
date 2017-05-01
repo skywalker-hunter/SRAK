@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form name="login_form" action="http://127.0.0.1:3000/loggingin" method="post">
+         userid   <input type="text" placeholder="username" name="username" required>
+    <br> password <input typy="password" placeholder="password" name="password" required><br>
+    <input type="submit"name="button1"value="login" required>
+</form>
+
+<form action="http://127.0.0.1:3000/forgot_password" method="post">
+    <input type="submit" name="redirect_to_forgot_password" value="forgot password?">
+</form>
+
+<form action="http://127.0.0.1:3000/signup" method="post">
+    <input type="submit" name="redirect_to_signup" value="Go to signup">
+</form>
+
+<form action="http://127.0.0.1:3000/deleting_user" method="post">
+    <input type="submit" name="redirect_to_signup" value="want to delete account">
+</form>
+
+</body>
+</html>
