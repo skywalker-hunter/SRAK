@@ -6,9 +6,10 @@ Automated grader for course assignments
 SRAK expects a zip folder consisting of submission files to be graded and two additional files. A test cases file named test.txt and the correct output file named out.txt. SRAK is accessed using a web-interface and provides a summary report as well as a comprehensive report. The summary report provides information if compile, runtime errors were encountered and provides provides a score for each file. The comprehensive report lists all compile time errors and runtime errrors(also gives timeout if the submission is taking too long). By default, the submission is given 5sec before timing out.
 
 ## Project documentation
-
+[System requirements](https://github.com/skywalker-hunter/SRAK/blob/master/System_Requirements_Specification.pdf)
 
 ## Code documentation
+[Doxygen documentation](https://github.com/skywalker-hunter/SRAK/blob/master/Doxygen_Documentation.pdf)
 
 ## Contributors
 * Sreekar Reddy cs13b1008@iith.ac.in
