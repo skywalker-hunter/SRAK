@@ -321,7 +321,9 @@ app.post('/dashboard', function (req, res){
                   });
 
                   });             
-              res.sendFile(__dirname + '/public/dashboard_downloadOption.html');
+              res.sendFile(__dirname + '/public/dashboard_
+			   
+			   Option.html');
         	  }
 
         	setTimeout(function1, 3000);	
@@ -367,6 +369,20 @@ app.post('/download_2', function(req, res) {
 
 });
 
+app.post('/download_3', function(req, res) {
+ 
+  console.log("came to post download");
+  fs.readFile(__dirname + '/uploaded_files/'+req.session.user.username+'/'+req.session.user.username +'.txt', 'utf8', function (err,data) {
+         if (err) {
+         return console.log(err);
+      }
+      console.log(data);
+      console.log(S(data).between('', '.').s )
+      console.log('copied----');
+      res.download(__dirname+'/uploaded_files/'+req.session.user.username+'/'+S(data).between('', '.').s +'/Plag_Report.txt');
+  }); 
+
+});
 
 app.post('/admin_loggingin',function(req,res){
 
