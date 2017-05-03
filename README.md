@@ -12,7 +12,7 @@ SRAK expects a zip folder consisting of submission files to be graded and two ad
 [Doxygen documentation](https://github.com/skywalker-hunter/SRAK/blob/master/Doxygen_Documentation.pdf)
 
 ## Screenshot
-![GUI screenshot](SRAK/Screen Shot 2017-05-03 at 7.17.03 PM.png)
+![GUI screenshot] (https://github.com/skywalker-hunter/SRAK/blob/master/Screen%20Shot%202017-05-03%20at%207.17.03%20PM.png)
 
 ## Contributors
 * Sreekar Reddy cs13b1008@iith.ac.in
