@@ -179,6 +179,10 @@ if __name__ == '__main__':
             reportFile.write('\nWrong output on testcases:\n')
             reportFile.write(str(v[5])+'\n\n')
             reportFile.write('****************************************\n')
+
+    with open('Plag_Report.txt', 'w') as plagFile:
+        report = subprocess.check_output('./moss -d '+ subm_dir + '/*.c /*.cpp')
+        plagFile.write(report)
     # shutil.rmtree('temp')
 
 
