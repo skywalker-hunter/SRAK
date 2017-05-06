@@ -35,3 +35,10 @@ SRAK expects a zip folder consisting of submission files to be graded and two ad
 
 * The backend is pure python and so has no dependencies. Python 2 and Python 3 work equally well.
 
+
+## Installation instructions
+(Install node.js) [https://github.com/skywalker-hunter/SRAK/blob/master/installation_nodejs.pdf]
+(Possible errors that could happen with installing node.js) [https://github.com/skywalker-hunter/SRAK/blob/master/errors_may_be_nodejs.pdf]
+(Run app.js) [https://github.com/skywalker-hunter/SRAK/blob/master/run_appjs.pdf]
+
+
