@@ -140,7 +140,7 @@ def printScore(fileName, testin, testout, timeout, lang):
 
 if __name__ == '__main__':
 
-    subm_dir = '/Users/killer/Desktop/10_24pm/uploaded_files/'+sys.argv[1]+'/'+sys.argv[2]
+    subm_dir = sys.argv[3]+'/uploaded_files/'+sys.argv[1]+'/'+sys.argv[2]
     print subm_dir
     subm_folder, testin, testout, timeout = subm_dir, 'test.txt', 'out.txt', '2'
     os.chdir(subm_folder)
@@ -181,7 +181,9 @@ if __name__ == '__main__':
             reportFile.write('****************************************\n')
 
     with open('Plag_Report.txt', 'w') as plagFile:
-        report = subprocess.check_output('./moss -d '+ subm_dir + '/*.c /*.cpp')
+        report = subprocess.check_output('./moss -d '+ subm_dir + '/*.c /*.cpp', stderr=open('plag_err.txt', 'w'), shell=True)
+        plag_err = open('plag_err.txt', 'r').read()
+        report += str(plag_err)
         plagFile.write(report)
     # shutil.rmtree('temp')
 
