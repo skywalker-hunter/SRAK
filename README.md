@@ -37,8 +37,8 @@ SRAK expects a zip folder consisting of submission files to be graded and two ad
 
 
 ## Installation instructions
-(Install node.js) [https://github.com/skywalker-hunter/SRAK/blob/master/installation_nodejs.pdf]
-(Possible errors that could happen with installing node.js) [https://github.com/skywalker-hunter/SRAK/blob/master/errors_may_be_nodejs.pdf]
-(Run app.js) [https://github.com/skywalker-hunter/SRAK/blob/master/run_appjs.pdf]
+[Install node.js] (https://github.com/skywalker-hunter/SRAK/blob/master/installation_nodejs.pdf)
+[Possible errors that could happen with installing node.js] (https://github.com/skywalker-hunter/SRAK/blob/master/errors_may_be_nodejs.pdf)
+[Run app.js] (https://github.com/skywalker-hunter/SRAK/blob/master/run_appjs.pdf)
 
 
